@@ -1,31 +1,49 @@
-import { useGetGeoLocationQuery } from "../../services/geoLocation";
+import { useEffect, useState } from "react";
+import { getIpGeoLocationInfo, getVisitorIP } from "../../services/api";
+import { IpGeoLocationInfoType } from "../../types";
 import Header from "../Header";
 import IpInfo from "../IpInfo";
 import Map from "../Map";
 import * as S from "./styles";
 
-const Front = ({ ip }: { ip: string }) => {
-  const { data, error, isLoading } = useGetGeoLocationQuery(ip);
+const Front = () => {
+  const [visitorIp, setVisitorIp] = useState("");
+  const [ipGeoInfo, setIpGeoInfo] = useState<IpGeoLocationInfoType | null>(
+    null
+  );
 
-  if (error) {
-    return <div>Front error</div>;
+  useEffect(() => {
+    async function getIp() {
+      const ip = await getVisitorIP();
+      setVisitorIp(ip);
+      const geo = await getIpGeoLocationInfo(visitorIp);
+      setIpGeoInfo(geo);
+    }
+    getIp();
+  }, [visitorIp]);
+
+  async function handleSubmit(ip: string) {
+    const data = await getIpGeoLocationInfo(ip);
+    setIpGeoInfo(data);
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (!visitorIp || !ipGeoInfo) {
+    <div>Loading...</div>;
   }
-
-  const { city, timezone } = data!.location;
-  const isp = data!.isp;
 
   return (
-    <>
-      <S.Container>
-        <Header />
-        <IpInfo ip={ip} location={city} timezone={timezone} isp={isp} />
-        <Map lat={data!.location.lat} lng={data!.location.lng} />
-      </S.Container>
-    </>
+    <S.Container>
+      <Header onSubmit={handleSubmit} />
+      <IpInfo
+        ip={ipGeoInfo?.ip}
+        city={ipGeoInfo?.location.city}
+        timezone={ipGeoInfo?.location.timezone}
+        isp={ipGeoInfo?.isp}
+      />
+      {ipGeoInfo?.location && (
+        <Map lat={ipGeoInfo.location.lat} lng={ipGeoInfo.location.lng} />
+      )}
+    </S.Container>
   );
 };
 

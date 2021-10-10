@@ -2,14 +2,14 @@ import * as S from "./styles";
 
 const IpInfo = ({
   ip,
-  location,
+  city,
   timezone,
   isp,
 }: {
-  ip: string;
-  location: string;
-  timezone: string;
-  isp: string;
+  ip?: string;
+  city?: string;
+  timezone?: string;
+  isp?: string;
 }) => {
   return (
     <S.Container>
@@ -19,7 +19,7 @@ const IpInfo = ({
       </S.Info>
       <S.Info>
         <S.Name>Location</S.Name>
-        {location}
+        {city}
       </S.Info>
       <S.Info>
         <S.Name>Timezone</S.Name>

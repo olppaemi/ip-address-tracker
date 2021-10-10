@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { MapConsumer, MapContainer, Marker, TileLayer } from "react-leaflet";
 import LocationIcon from "../../assets/images/icon-location.svg";
 import * as S from "./styles";
 
@@ -14,6 +14,12 @@ const Map = ({ lat, lng }: { lat: number; lng: number }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Marker position={[lat, lng]} icon={Icon} />
+        <MapConsumer>
+          {(map) => {
+            map.panTo([lat, lng]);
+            return null;
+          }}
+        </MapConsumer>
       </MapContainer>
     </S.Container>
   );
