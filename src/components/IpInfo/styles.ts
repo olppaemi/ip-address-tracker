@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { media } from "../../styles/media";
 import { rem } from "../../styles/utils";
 
 export const Container = styled.div`
@@ -16,6 +17,19 @@ export const Container = styled.div`
   & > * + * {
     border-left: 1px solid hsla(0, 0%, 59%, 0.15);
   }
+
+  @media (max-width: ${media.md}) {
+    flex-direction: column;
+    height: ${rem(294)};
+    left: 6.4%;
+    right: 6.4%;
+    justify-content: space-between;
+    padding: ${rem(24)};
+
+    & > * + * {
+      border-left: 0;
+    }
+  }
 `;
 
 export const Info = styled.h2`
@@ -26,6 +40,13 @@ export const Info = styled.h2`
   flex-direction: column;
   justify-content: center;
   padding: 0 ${rem(32)};
+
+  @media (max-width: ${media.lg}) {
+    width: 100%;
+    font-size: ${rem(20)};
+    padding: 0;
+    align-items: center;
+  }
 `;
 
 export const Name = styled.small`
@@ -35,4 +56,9 @@ export const Name = styled.small`
   text-transform: uppercase;
   color: ${({ theme }) => theme.palette.mountainMist};
   margin-bottom: ${rem(12)};
+
+  @media (max-width: ${media.lg}) {
+    font-size: ${rem(10)};
+    margin-bottom: ${rem(7)};
+  }
 `;

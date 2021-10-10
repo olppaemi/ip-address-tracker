@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import validator from "validator";
 import ArrowIcon from "./ArrowIcon";
 import * as S from "./styles";
 
@@ -7,7 +8,15 @@ const Header = ({ onSubmit }: { onSubmit: Function }) => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!validator.isIP(ip, 4)) {
+      alert("Invalid IP Address");
+      setIp("");
+      return;
+    }
+
     onSubmit(ip);
+    setIp("");
   };
 
   return (
