@@ -37,6 +37,8 @@ const Front = () => {
       <IpInfo
         ip={ipGeoInfo?.ip}
         city={ipGeoInfo?.location.city}
+        region={ipGeoInfo?.location.region}
+        postalCode={ipGeoInfo?.location.postalCode}
         timezone={ipGeoInfo?.location.timezone}
         isp={ipGeoInfo?.isp}
       />

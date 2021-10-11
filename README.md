@@ -53,6 +53,10 @@ Users should be able to:
 
 ### Useful resources
 
+https://geo.ipify.org/
+
+https://leafletjs.com/
+
 ## Author
 
 ## Acknowledgments
